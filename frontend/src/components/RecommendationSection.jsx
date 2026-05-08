@@ -40,7 +40,8 @@ const RecommendationSection = () => {
         return;
       }
       try {
-        const res = await axios.get(`http://localhost:8000/api/autocomplete?q=${encodeURIComponent(query)}&limit=5`);
+        const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+        const res = await axios.get(`${apiUrl}/api/autocomplete?q=${encodeURIComponent(query)}&limit=5`);
         setSuggestions(res.data.suggestions || []);
       } catch (err) {
         console.error("Autocomplete error", err);
@@ -60,7 +61,8 @@ const RecommendationSection = () => {
     setError('');
     
     try {
-      let url = `http://localhost:8000/api/recommend?q=${encodeURIComponent(searchQuery)}&limit=15`;
+      const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+      let url = `${apiUrl}/api/recommend?q=${encodeURIComponent(searchQuery)}&limit=15`;
       if (genre !== 'All') url += `&genre=${encodeURIComponent(genre)}`;
       
       const response = await axios.get(url);

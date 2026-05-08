@@ -26,7 +26,8 @@ const MovieDetailsModal = ({ movie, onClose }) => {
   useEffect(() => {
     const fetchSimilar = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/recommend?q=${encodeURIComponent(movie.title)}&limit=6`);
+        const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+        const response = await axios.get(`${apiUrl}/api/recommend?q=${encodeURIComponent(movie.title)}&limit=6`);
         const results = response.data.recommendations || [];
         
         // Remove the movie itself from recommendations if it's there
